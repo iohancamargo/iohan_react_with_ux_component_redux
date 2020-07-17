@@ -1,0 +1,18 @@
+.home__small_title {
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 0;
+    color: #1D5297;
+    opacity: 1;
+}
+
+.home__group-radio {
+    width: 100%;
+    display: flex;
+    padding: $xs-size;
+    align-items: center;
+    border-radius: 21px;
+    border: 1px solid #4480C5;
+    justify-content: space-between;
+    font-size: 16px;
+}

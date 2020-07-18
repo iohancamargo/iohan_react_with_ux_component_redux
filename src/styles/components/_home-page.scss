@@ -15,4 +15,67 @@
     border: 1px solid #4480C5;
     justify-content: space-between;
     font-size: 16px;
+    margin-bottom: 25px;
+}
+
+.home__radio-selected {
+    .PrivateRadioButtonIcon-root-5 PrivateRadioButtonIcon-checked-7{
+
+        background-color: blue !important;
+        color: white !important;
+        padding-right: 15px;
+        border-radius: 15px;
+        /* width: 100%; */
+        height: 100%;
+    }
+}
+
+.home__header-card {
+    color: #FF6A17;
+    background-color: #FF6A17;
+    height: 15px;
+    width: 100%;
+    margin: 0;
+}
+
+.home__separator-card {
+    color: #4480C5;
+    background-color: #4480C5;
+    width: 100%;
+    margin: 0;
+}
+.home__card-img-service {
+    margin-top: 25px;
+}
+.home__products-valor-a {
+    text-align: center;
+    text-decoration: line-through;
+    font-size: 13px;
+    color: #333333;
+}
+.home__products-valor-b {
+    text-align: center;
+    font-size: 13px;
+    color: #333333;
+}
+.home__products-equal {
+    text-align: center;
+    font-size: 13px;
+    color: #333333;
+    display: list-item;
+    list-style: none;
+}
+
+.home__products-valor-c-md {
+    text-align: center;
+    font-size: 20px;
+    color: #1D5297;
+    list-style: none;
+}
+
+.home__products-valor-c {
+    text-align: center;
+    font-size: 35px;
+    color: #1D5297;
+    list-style: none;
 }

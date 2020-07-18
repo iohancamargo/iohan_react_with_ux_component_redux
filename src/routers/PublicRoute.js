@@ -8,8 +8,8 @@ const PublicRoute = ({ component: RouteComponent, ...rest }) => {
         <Route
             {...rest}
             render={routeProps => (
-                        <RouteComponent {...routeProps} />
-                    )
+                    <RouteComponent {...routeProps} />
+                )
             }
         />
     );

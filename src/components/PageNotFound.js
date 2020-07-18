@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from "react-router";
+import { useSelector } from 'react-redux';
 
 const PageNotFound = () => {
-
+    const listProducts = useSelector(state => state.products);
+    console.log('listProducts', listProducts);
     /* Estudar maneira de passar todos esses efetivos para react
         var parallax = function(e) {
             var windowWidth = $(window).width();

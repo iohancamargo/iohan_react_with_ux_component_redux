@@ -1,5 +1,5 @@
 .button {
-    background: $blue;
+    background: #FF6A17;
     border: none;
     color: white;
     display: inline-block;
@@ -8,6 +8,8 @@
     line-height: 1;
     padding: $s-size;
     text-decoration: none;
+    border-radius: 45px;
+    width: 85%;
 }
 
 .button--link {

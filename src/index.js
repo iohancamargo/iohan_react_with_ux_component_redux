@@ -24,11 +24,11 @@ const renderApp = () => {
 
     if (!hasRendered) {
         // setTimeout( function (){
-            ReactDOM.render(<Provider store={store}>
-                                <AppRouter />
-                            </Provider>, document.getElementById('root'));
-    
-            hasRendered = true;
+        ReactDOM.render(<Provider store={store}>
+                            <AppRouter />
+                        </Provider>, document.getElementById('root'));
+
+        hasRendered = true;
         // }, 3000);
 
     }

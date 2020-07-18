@@ -65,14 +65,8 @@ const useStyles = makeStyles((theme) => ({
   
   const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-const HomePage = () => {
-
-
-    
-    
-    
+const CardPage = () => {
     const classes = useStyles();
-
     return (
         <React.Fragment>
             <CssBaseline />
@@ -161,4 +155,4 @@ const HomePage = () => {
     );
 };
 
-export default withRouter(HomePage);
+export default (CardPage);

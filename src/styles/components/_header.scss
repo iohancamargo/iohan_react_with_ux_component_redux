@@ -37,7 +37,6 @@
 
 .header__right {
     padding-right: 1em;
-    //margin-bottom: -3%;
     img {
         max-height: 260px;
     }
@@ -45,7 +44,6 @@
 
 .header__left { 
     padding-left: 1em;
-    //margin-bottom: -3%;
     img {
         max-height: 260px;
     }
@@ -62,4 +60,15 @@
     margin-right: auto;
     display: block;
     max-width: 32px;
+}
+.header__not-show-sm {
+    @media (max-width: 992px) {
+        display: none;
+    }
+}
+
+.header__not-show-md {
+    @media (min-width: 992px) {
+        display: none;
+    }
 }

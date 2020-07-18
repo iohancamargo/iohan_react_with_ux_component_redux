@@ -18,18 +18,6 @@
     margin-bottom: 25px;
 }
 
-.home__radio-selected {
-    .PrivateRadioButtonIcon-root-5 PrivateRadioButtonIcon-checked-7{
-
-        background-color: blue !important;
-        color: white !important;
-        padding-right: 15px;
-        border-radius: 15px;
-        /* width: 100%; */
-        height: 100%;
-    }
-}
-
 .home__header-card {
     color: #FF6A17;
     background-color: #FF6A17;
@@ -78,4 +66,51 @@
     font-size: 35px;
     color: #1D5297;
     list-style: none;
+}
+
+.home__domain-info {
+    color: #333333;
+    text-align: center;
+    font-size: 13px;
+    display: list-item;
+    list-style: none;
+}
+
+.home__safe-money {
+    color: #1D5297;
+    text-align: center;
+    font-size: 14px;
+    display: list-item;
+    list-style: none;
+    margin-top: 5px;
+    opacity: 1;
+    margin-bottom: 30px;
+}
+
+.home__badge_desc {
+    color: #FFF;
+    background-color: #51C99C;
+    padding: 3px;
+    border-radius: 25px;
+    
+}
+
+.home__info-card-footer {
+    text-align: left;
+    font-size: 16px;
+    color: #333333;
+    display: list-item;
+    list-style: none;
+}
+
+.home__info-card-footer-dots {
+    border-bottom: 1px dashed #9EB8DC;
+}
+
+.home__mg-top {
+    margin-top: 25px;
+}
+
+.Carousel-button-23 {
+    background-color: #FF6A17 !important;
 }

@@ -2,49 +2,35 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 
-/* Components */
-import { toast } from 'react-toastify';
-//import Grid from '@material-ui/core/Grid';
-import Header from '../components/Header';
-//import PropTypes from 'prop-types';
-//import { withStyles } from '@material-ui/core/styles';
-//import green from '@material-ui/core/colors/green';
-import Radio from '@material-ui/core/Radio';
-//import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
-//import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
-
-import { startGetProducts } from '../actions/products';
-import CardPage from './examplemui';
-
-
+/* Material ui components */
+import {Paper} from '@material-ui/core';
 import Card from '@material-ui/core/Card';
-import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
-import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-import Toolbar from '@material-ui/core/Toolbar';
-import CardMedia from '@material-ui/core/CardMedia';
-import Container from '@material-ui/core/Container';
+import Radio from '@material-ui/core/Radio';
+import InfoIcon from '@material-ui/icons/Info';
+import Carousel from 'react-material-ui-carousel'
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CameraIcon from '@material-ui/icons/PhotoCamera';
-import CssBaseline from '@material-ui/core/CssBaseline';
 
-// const styles = {
-//     root: {
-//       color: green[600],
-//       '&$checked': {
-//         color: green[500],
-//       },
-//     },
-//     checked: {},
-//   };
+/* Components */
+import { toast } from 'react-toastify';
+import Header from '../components/Header';
+import { startGetProducts } from '../actions/products';
+
+const formatNumberPtBr = (number) => {
+    let formatter = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+        minimumFractionDigits: 2,
+    });
+
+    return formatter.format(number);
+}
 
 function addProductsAction(products) {
     return { type: 'POPULATE_PRODUCTS', products }
 }
+
 const useStyles = makeStyles((theme) => ({
     icon: {
       marginRight: theme.spacing(2),
@@ -83,27 +69,21 @@ const useStyles = makeStyles((theme) => ({
 const HomePage = () => {
     const dispatch = useDispatch();
     const classes = useStyles();
+    const [selectedPlan, setSelectedPlan] = useState('a');    
     const listProducts = useSelector(state => state.products);
-    const statedefault = useSelector(state => state);
-    console.log('statedefault', statedefault);
-
-    console.log('listProducts - use selector', listProducts);
-    const [selectedValue, setSelectedValue] = useState('a');    
+    const [productSelected, setProductSelected] = useState(null);
 
     function addProducts(productsData) {
-        console.log('vai chamar o dispatch', productsData);
         dispatch(addProductsAction(productsData));
     }
-
+    
     useEffect(() => {
         /* Garante que só será realizada uma request para popular o storage */
-        console.log('listProducts.length', listProducts.length);
         if (listProducts.length === 0) {
             startGetProducts()
                 .then((resProducts) => {
                     if (resProducts.success) {
                         let products = resProducts.data;
-                        console.log('data recebida', products);
                         if (products.length > 0) {
                             addProducts(products);
                         }
@@ -111,111 +91,177 @@ const HomePage = () => {
                         toast.error("Ocorreu um erro ao listar os produtos...");
                     }
                 });
+        } else {
+            setProductSelected(listProducts[0]);
         }
 
-    }, [addProducts, listProducts.length] );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [listProducts] );
 
-    // const [password, setPassword] = useState('123456');
-
-    // const onSubmit = (e) => {
-        
-        // e.preventDefault();
-
-        // if (!email || !password) {            
-        //     toast.error("Por favor, insira as suas credenciais para realizar login.");
-        // } else {
+    const showValueA = () => {
+        let value = 0;
+        switch (selectedPlan) {
+            case 'a':
+                value = productSelected.cycle.triennially.priceOrder;
+            break;
             
-        //     let objLogin = { email, password };
-        //     startLogin(objLogin)
-        //     .then((resLogin) => {                
+            case 'b':
+                value = productSelected.cycle.annually.priceOrder;
+            break;
 
-        //         if(resLogin['success']){
-        //             toast.success("Login realizado com sucesso.");
-        //             setCurrentUser(resLogin);
-        //         }else{                    
-        //             toast.error(resLogin['message']);
-        //         }
+            case 'c':
+                value = productSelected.cycle.monthly.priceOrder;
+            break;
+            default:
+                value = 0;
+            break;
+        }
+        return value;
+    }
 
-        //     })
-        //     .catch((errLogin) => {
-        //         toast.error(errLogin);                
-        //     });
-        // }
-    // };
+    const showValueB = () => {
+        let value = 0;
+        let price = 0;
+        let desconto = 0;
+        switch (selectedPlan) {
+            case 'a':
+                price = productSelected.cycle.triennially.priceOrder;
+                desconto = productSelected.cycle.triennially.priceOrder * 0.40;
+                value = price - desconto;
+            break;
+            
+            case 'b':
+                price = productSelected.cycle.annually.priceOrder;
+                desconto = productSelected.cycle.annually.priceOrder * 0.40;
+                value = price - desconto;
+            break;
+
+            case 'c':
+                price = productSelected.cycle.monthly.priceOrder;
+                desconto = productSelected.cycle.monthly.priceOrder * 0.40;
+                value = price - desconto;
+            break;
+            default:
+                value = 0;
+            break;
+        }
+        return value;
+    }
+
+    const showValueC = () => {
+        let value = null;
+        switch (selectedPlan) {
+            case 'a':
+                value = showValueB() / 36;
+            break;
+            case 'b':
+                value = showValueB() / 12;
+            break;
+
+            case 'c':
+                value = showValueB() / 1;;
+            break;
+            default:
+                value = 0;
+            break;
+        }
+        return value;
+    }
+
+    const showValueD = () => {
+        let value = null;
+        value = showValueA() - showValueB();
+        return value;
+    }
+
+    const changePlain = (pos) => {
+        setProductSelected(listProducts[pos]);
+    }
 
     return (
         <>
         <Header />
         <div className="box-layout">            
             <div className="box-layout__box">
-                <p className="home__small_title">Quero pagar a cada:</p>
-                
-                <div className="home__group-radio">
-                    <div className="header__left">
-                        <Radio
-                            checked={selectedValue === 'a'}
-                            onChange={(e) => setSelectedValue(e.target.value)}
-                            value="a"
-                            name="radio-button-demo"
-                            aria-label="A"
-                        /> <span>3 anos</span>
-                    </div>
+                {
+                    productSelected === null ? (
+                        <img className="loader__image" src="/images/loader.gif" alt="loading..."/>
+                    ) :
+                    (
+                        <>
+                            <p className="home__small_title">Quero pagar a cada:</p>
+                            <div className="home__group-radio">
+                                <div className="header__left">
+                                    <Radio
+                                        checked={selectedPlan === 'a'}
+                                        onChange={(e) => setSelectedPlan(e.target.value)}
+                                        value="a"
+                                        color="primary"
+                                        name="radio-button-demo"
+                                        aria-label="A"
+                                    /> <span>3 anos</span>
+                                </div>
+                                <div>
+                                    <Radio
+                                        checked={selectedPlan === 'b'}
+                                        onChange={(e) => setSelectedPlan(e.target.value)}
+                                        value="b"
+                                        color="primary"
+                                        name="radio-button-demo"
+                                        aria-label="B"
+                                    /> <span>1 ano</span>
+                                </div>
 
-                    <div>
-                        <Radio
-                            checked={selectedValue === 'b'}
-                            onChange={(e) => setSelectedValue(e.target.value)}
-                            value="b"
-                            name="radio-button-demo"
-                            aria-label="B"
-                        /> <span>1 ano</span>
-                    </div>
+                                <div className="header__right">
+                                    <Radio
+                                        checked={selectedPlan === 'c'}
+                                        onChange={(e) => setSelectedPlan(e.target.value)}
+                                        value="c"
+                                        color="primary"
+                                        name="radio-button-demo"
+                                        aria-label="C"
+                                    /><span>1 mes</span>
+                                </div>
+                            </div>
 
-                    <div className="header__right">
-                        <Radio
-                            checked={selectedValue === 'c'}
-                            onChange={(e) => setSelectedValue(e.target.value)}
-                            value="c"
-                            name="radio-button-demo"
-                            aria-label="C"
-                        /><span>1 mes</span>
-                    </div>
-                </div>
+                            <Card className={classes.card}>
+                                <hr className="home__header-card"/>
+                                <Carousel autoPlay={false} indicators={false} next={(next) => changePlain(next)} navButtonsAlwaysVisible={true} prev={(prev) => changePlain(prev)} >
+                                    {
+                                        listProducts.map( (item) => (
+                                            <Paper key={item.name}>
+                                                <img src="/images/img_card._home.svg" className="home__card-img-service" alt="Hostgator" />   
+                                                <Typography gutterBottom variant="h5" component="h2" className={classes.titleProduct}>
+                                                    { item.name}
+                                                </Typography>
+                                            </Paper>
+                                        ))
+                                    }
+                                </Carousel>
 
-                <Card className={classes.card}>
-                    <hr className="home__header-card"/>
-                    <img src="/images/img_card._home.svg" className="home__card-img-service" alt="Hostgator" />   
-                                           
-                    <CardContent className={classes.cardContent}>
-                        <Typography gutterBottom variant="h5" component="h2" className={classes.titleProduct}>
-                            Plano Bussiness
-                        </Typography>
-                        <hr className="home__separator-card" />  
-                        <span className="home__products-valor-a">R$ 647,64</span> <span className="home__products-valor-b">R$ 453,35</span>
-                        <span className="home__products-equal">equivalente a</span>
-                        <span className="home__products-valor-c-md">R$ </span><span className="home__products-valor-c">12,59</span><span className="home__products-valor-c-md">/mês*</span>
-                        <Typography gutterBottom variant="h5" component="h2" className={classes.titleProduct}>
-                            <button className="button">Contrate Agora</button>
-                            <span className="home__products-equal">1 ano de Dominio Grátis</span>
-                        </Typography>
-                    </CardContent>
-                    {/* <CardActions>
-                    <Button size="small" color="primary">
-                        View
-                    </Button>
-                    <Button size="small" color="primary">
-                        Edit
-                    </Button>
-                    </CardActions> */}
-                </Card>
-
-
-                {/* <p>Insira seu e-mail ou login para acessar.</p>
-                <form className="form" onSubmit={onSubmit}>
-                    <input value={email} onChange={(e) => setEmail(e.target.value)} />
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    <button className="button">Login</button>
-                </form> */}
+                                <CardContent className={classes.cardContent}>                                   
+                                    <span className="home__products-valor-a">R$ {formatNumberPtBr(showValueA())} </span> <span className="home__products-valor-b">R$ {formatNumberPtBr(showValueB())}</span>
+                                    <span className="home__products-equal">equivalente a</span>
+                                    <span className="home__products-valor-c-md">R$ </span><span className="home__products-valor-c">{formatNumberPtBr(showValueC())}</span><span className="home__products-valor-c-md">/mês*</span>
+                                    <Typography gutterBottom variant="h5" component="h2" className={classes.titleProduct}>
+                                        <button className="button">Contrate Agora</button>
+                                        <span className="home__domain-info">1 ano de Dominio Grátis <InfoIcon style={{ fontSize: 13, marginTop:10, color: "#1D5297" }}/></span>
+                                        <span className="home__safe-money">economize R$ {formatNumberPtBr(showValueD())} <span className="home__badge_desc">40% OFF</span></span>
+                                    </Typography>
+                                    <hr className="home__separator-card"/>
+                                    <div className="home__mg-top">
+                                        <span className="home__info-card-footer"><span className="home__info-card-footer-dots">Sites ilimitados</span></span>
+                                        <span className="home__info-card-footer"><strong>100 GB</strong> de Armazenamento </span>
+                                        <span className="home__info-card-footer"><span className="home__info-card-footer-dots">Contas de E-mail</span> <strong>ilimitadas</strong> </span>
+                                        <span className="home__info-card-footer">Criador de Sites <strong>Grátis</strong> </span>
+                                        <span className="home__info-card-footer">Certificados SLL <strong>Grátis</strong> (https) </span>
+                                    </div>
+                                </CardContent>
+                                    <hr className="home__header-card"/>
+                            </Card>
+                        </>
+                    )
+                }
             </div>
         </div>
         </>

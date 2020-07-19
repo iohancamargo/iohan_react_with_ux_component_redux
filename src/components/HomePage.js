@@ -80,7 +80,7 @@ const HomePage = () => {
     
     useEffect(() => {
         /* Garante que só será realizada uma request para popular o storage */
-        console.log('listProducts', );
+        console.log('listProducts');
         if (listProducts.length === 0) {
             startGetProducts()
                 .then((resProducts) => {
@@ -204,7 +204,7 @@ const HomePage = () => {
     return (
         <>
         <Header />
-        <div className="box-layout">            
+        <div className="box-layout" id="content-part">            
             <div className="box-layout__box">
                 {
                     productSelected === null ? (

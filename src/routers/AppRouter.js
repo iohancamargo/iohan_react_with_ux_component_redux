@@ -18,7 +18,7 @@ const AppRouter = () => {
             <div>
                 <Switch>
                     <PublicRoute exact path="/" component={ HomePage }  />
-                    <PublicRoute exact path="/contratar/:idProd/:cycle/:promocod" component={ ContractPage }  />
+                    <PublicRoute exact path="/contratar/:idProd/:cycleParam/:promocod" component={ ContractPage }  />
                     <PublicRoute exact path='/404' component={ PageNotFound } />
                     <Redirect from='*' to='/404' />
                 </Switch>     

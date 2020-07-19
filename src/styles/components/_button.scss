@@ -12,6 +12,20 @@
     width: 85%;
 }
 
+.button-green {
+    background: #51c99c;
+    border: none;
+    color: white;
+    display: inline-block;
+    font-size: $font-size-large;
+    font-weight: 300;
+    line-height: 1;
+    padding: $s-size;
+    text-decoration: none;
+    border-radius: 45px;
+    width: 85%;
+}
+
 .button--link {
     background: none;
 }

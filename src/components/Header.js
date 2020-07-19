@@ -7,6 +7,13 @@ import Grid from '@material-ui/core/Grid';
 import CheckIcon from '@material-ui/icons/Check';
 
 export const Header = () => {
+
+    const handleSlideDown = (e) => {
+        e.preventDefault();
+        console.log('entrou aqui');
+        this.messagesEnd.scrollIntoView({ behavior: "box-layout" })
+    }
+
     return (
         <>
             <img src="/images/hostgator-logo.svg" className="header-img" alt="Hostgator" />
@@ -42,14 +49,14 @@ export const Header = () => {
                                 </div>
 
                                 <Grid xs={12} sm={12} md={12} item >
-                                    <img src="/images/img_arrow_down.svg" className="header__img_arrow" alt="Hostgator" />
+                                    <img src="/images/img_arrow_down.svg" className="header__img_arrow" alt="Hostgator" onClick={handleSlideDown}/>
                                 </Grid>
                                 
                                 
                             </Grid>
                         </div>
                         <div className="header__right header__not-show-sm">
-                            <img src="/images/img_header_right.svg" alt="Hostgator" />
+                            <img src="/images/img_header_right.svg" alt="Hostgator"/>
                         </div>
                     </div>
                 </div>

@@ -60,6 +60,8 @@
     margin-right: auto;
     display: block;
     max-width: 32px;
+    margin-bottom: -25px;
+    cursor: pointer;
 }
 .header__not-show-sm {
     @media (max-width: 992px) {

@@ -4,7 +4,7 @@ export const startGetProducts = () => {
 
     return new Promise((resolve) => {
         Api.get("products", {})
-            .then((res) => {                
+            .then((res) => {
                 let arrData = Array.from(Object.values(res.data.shared.products));
                 let returnObj = {
                     success: true,

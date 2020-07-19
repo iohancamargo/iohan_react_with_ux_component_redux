@@ -7,6 +7,7 @@ import { createBrowserHistory as createHistory } from 'history';
 /* Components */
 import PublicRoute from "./PublicRoute";
 import HomePage from '../components/HomePage';
+import ContractPage from '../components/ContractPage';
 import PageNotFound from '../components/PageNotFound';
 
 export const history = createHistory();
@@ -17,6 +18,7 @@ const AppRouter = () => {
             <div>
                 <Switch>
                     <PublicRoute exact path="/" component={ HomePage }  />
+                    <PublicRoute exact path="/contratar/:idProd/:cycle/:promocod" component={ ContractPage }  />
                     <PublicRoute exact path='/404' component={ PageNotFound } />
                     <Redirect from='*' to='/404' />
                 </Switch>     

@@ -1,4 +1,5 @@
 /* Libs */
+import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -79,6 +80,7 @@ const HomePage = () => {
     
     useEffect(() => {
         /* Garante que só será realizada uma request para popular o storage */
+        console.log('listProducts', );
         if (listProducts.length === 0) {
             startGetProducts()
                 .then((resProducts) => {
@@ -178,6 +180,27 @@ const HomePage = () => {
         setProductSelected(listProducts[pos]);
     }
 
+    const returnNameCycle = () => {
+        let name = "";
+        switch (selectedPlan) {
+            case 'a':
+                name = "triennially";
+            break;
+            
+            case 'b':
+                name = "annually";                
+            break;
+
+            case 'c':                
+                name = "monthly";
+            break;
+            default:
+                name = "";
+            break;
+        }
+        return name;
+    }
+
     return (
         <>
         <Header />
@@ -244,7 +267,10 @@ const HomePage = () => {
                                     <span className="home__products-equal">equivalente a</span>
                                     <span className="home__products-valor-c-md">R$ </span><span className="home__products-valor-c">{formatNumberPtBr(showValueC())}</span><span className="home__products-valor-c-md">/mês*</span>
                                     <Typography gutterBottom variant="h5" component="h2" className={classes.titleProduct}>
+                                    
+                                    <Link className="button-marg-lef" to={`/contratar/${productSelected.id}/${returnNameCycle()}/PROMOHG40`}>
                                         <button className="button">Contrate Agora</button>
+                                    </Link>
                                         <span className="home__domain-info">1 ano de Dominio Grátis <InfoIcon style={{ fontSize: 13, marginTop:10, color: "#1D5297" }}/></span>
                                         <span className="home__safe-money">economize R$ {formatNumberPtBr(showValueD())} <span className="home__badge_desc">40% OFF</span></span>
                                     </Typography>

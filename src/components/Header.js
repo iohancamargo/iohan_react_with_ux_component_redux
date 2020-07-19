@@ -11,7 +11,7 @@ export const Header = () => {
     const handleSlideDown = (e) => {
         e.preventDefault();
         console.log('entrou aqui');
-        this.messagesEnd.scrollIntoView({ behavior: "box-layout" })
+        // this.messagesEnd.scrollIntoView({ behavior: "box-layout" })
     }
 
     return (

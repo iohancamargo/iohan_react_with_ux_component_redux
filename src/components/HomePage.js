@@ -68,9 +68,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 const HomePage = () => {
-    const dispatch = useDispatch();
     const classes = useStyles();
+    const dispatch = useDispatch();
     const [selectedPlan, setSelectedPlan] = useState('a');    
+    const [alreadySearch, setAlreadySearch] = useState(false);
     const listProducts = useSelector(state => state.products);
     const [productSelected, setProductSelected] = useState(null);
 
@@ -79,11 +80,11 @@ const HomePage = () => {
     }
     
     useEffect(() => {
-        /* Garante que só será realizada uma request para popular o storage */
-        console.log('listProducts');
+        /* Garante que só será realizada uma request para popular o storage */        
         if (listProducts.length === 0) {
             startGetProducts()
                 .then((resProducts) => {
+                    setAlreadySearch(true);
                     if (resProducts.success) {
                         let products = resProducts.data;
                         if (products.length > 0) {
@@ -208,7 +209,10 @@ const HomePage = () => {
             <div className="box-layout__box">
                 {
                     productSelected === null ? (
-                        <img className="loader__image" src="/images/loader.gif" alt="loading..."/>
+                        alreadySearch === false ? 
+                            (<img className="loader__image" src="/images/loader.gif" alt="loading..."/>) 
+                            : 
+                            (<h1>Não existem produtos cadastrados na api.</h1>)
                     ) :
                     (
                         <>
